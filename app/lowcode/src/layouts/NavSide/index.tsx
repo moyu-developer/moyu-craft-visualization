@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Navbar, Center, Tooltip, UnstyledButton, createStyles, Stack } from '@mantine/core';
+import { useState } from "react";
+import { Navbar, Center, Tooltip, UnstyledButton, Stack } from "@mantine/core";
 import {
   TablerIcon,
   IconHome2,
@@ -11,39 +11,13 @@ import {
   IconSettings,
   IconLogout,
   IconSwitchHorizontal,
-} from '@tabler/icons';
+  IconBrightnessDown,
+  IconBrightnessUp,
+} from "@tabler/icons";
 
-const useStyles = createStyles((theme) => ({
-  link: {
-    width: 50,
-    height: 50,
-    borderRadius: theme.radius.md,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: theme.white,
-    opacity: 0.85,
-
-    '&:hover': {
-      opacity: 1,
-      backgroundColor: theme.fn.lighten(
-        theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background,
-        0.1
-      ),
-    },
-  },
-
-  active: {
-    opacity: 1,
-    '&, &:hover': {
-      backgroundColor: theme.fn.lighten(
-        theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background,
-        0.15
-      ),
-    },
-  },
-}));
-
+import useStyles from "./index.css";
+import { useRecoilState } from "recoil";
+import { modeState } from "@/store";
 interface NavbarLinkProps {
   icon: TablerIcon;
   label: string;
@@ -55,7 +29,10 @@ function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
   const { classes, cx } = useStyles();
   return (
     <Tooltip label={label} position="right" transitionDuration={0}>
-      <UnstyledButton onClick={onClick} className={cx(classes.link, { [classes.active]: active })}>
+      <UnstyledButton
+        onClick={onClick}
+        className={cx(classes.link, { [classes.active]: active })}
+      >
         <Icon stroke={1.5} />
       </UnstyledButton>
     </Tooltip>
@@ -63,17 +40,21 @@ function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
 }
 
 const mockdata = [
-  { icon: IconHome2, label: 'Home' },
-  { icon: IconGauge, label: 'Dashboard' },
-  { icon: IconDeviceDesktopAnalytics, label: 'Analytics' },
-  { icon: IconCalendarStats, label: 'Releases' },
-  { icon: IconUser, label: 'Account' },
-  { icon: IconFingerprint, label: 'Security' },
-  { icon: IconSettings, label: 'Settings' },
+  { icon: IconHome2, label: "Home" },
+  { icon: IconGauge, label: "Dashboard" },
+  { icon: IconDeviceDesktopAnalytics, label: "Analytics" },
+  { icon: IconCalendarStats, label: "Releases" },
+  { icon: IconUser, label: "Account" },
+  { icon: IconFingerprint, label: "Security" },
+  { icon: IconSettings, label: "Settings" },
 ];
 
 const NavSide = () => {
   const [active, setActive] = useState(2);
+  const [mode, setMode] = useRecoilState(modeState);
+
+
+  console.log(mode)
 
   const links = mockdata.map((link, index) => (
     <NavbarLink
@@ -85,19 +66,8 @@ const NavSide = () => {
   ));
 
   return (
-    <Navbar
-      height={750}
-      width={{ base: 80 }}
-      p="md"
-      sx={(theme) => ({
-        backgroundColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
-          .background,
-      })}
-    >
-      <Center>
-        1
-        {/* <MantineLogo type="mark" inverted size={30} /> */}
-      </Center>
+    <Navbar width={{ base: 80 }} p="md">
+      <Center>1{/* <MantineLogo type="mark" inverted size={30} /> */}</Center>
       <Navbar.Section grow mt={50}>
         <Stack justify="center" spacing={0}>
           {links}
@@ -105,12 +75,16 @@ const NavSide = () => {
       </Navbar.Section>
       <Navbar.Section>
         <Stack justify="center" spacing={0}>
-          <NavbarLink icon={IconSwitchHorizontal} label="Change account" />
+          <NavbarLink
+            icon={mode === "light" ? IconBrightnessDown : IconBrightnessDown}
+            label="IconBrightnessUp"
+            onClick={() => setMode(mode === "dark" ? "light" : "dark")}
+          />
           <NavbarLink icon={IconLogout} label="Logout" />
         </Stack>
       </Navbar.Section>
     </Navbar>
   );
-}
+};
 
-export default NavSide
+export default NavSide;

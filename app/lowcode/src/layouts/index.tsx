@@ -1,25 +1,32 @@
 import { MantineProvider } from "@mantine/core";
 import { Link, Outlet } from "umi";
 import NavSide from "./NavSide";
+import { RecoilRoot, useRecoilState, useRecoilValue } from "recoil";
+import useStyles from "./index.css";
+import { modeState } from "@/store";
 
 export default function Layout() {
+  const { classes } = useStyles();
+  const colorScheme = useRecoilValue(modeState);
+
+  console.log(colorScheme, 'colorScheme')
+
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
-      <div>
-        {/* <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/docs">Docs</Link>
-        </li>
-        <li>
-          <a href="https://github.com/umijs/umi">Github</a>
-        </li>
-      </ul> */}
-        <NavSide />
-        <Outlet />
-      </div>
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      theme={{
+        colorScheme
+      }}
+    >
+      <RecoilRoot>
+        <div className={classes.layout}>
+          <NavSide />
+          <div className={classes.outlet}>
+            <Outlet />
+          </div>
+        </div>
+      </RecoilRoot>
     </MantineProvider>
   );
 }
