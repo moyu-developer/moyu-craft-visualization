@@ -10,9 +10,8 @@ import {
   IconUser,
   IconSettings,
   IconLogout,
-  IconSwitchHorizontal,
-  IconBrightnessDown,
-  IconBrightnessUp,
+  IconBrightness2,
+  IconMoonStars
 } from "@tabler/icons";
 
 import useStyles from "./index.css";
@@ -76,7 +75,7 @@ const NavSide = () => {
       <Navbar.Section>
         <Stack justify="center" spacing={0}>
           <NavbarLink
-            icon={mode === "light" ? IconBrightnessDown : IconBrightnessDown}
+            icon={mode === "light" ? IconBrightness2 : IconMoonStars}
             label="IconBrightnessUp"
             onClick={() => setMode(mode === "dark" ? "light" : "dark")}
           />

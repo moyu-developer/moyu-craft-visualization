@@ -1,0 +1,1 @@
+export const WHITE_ROUTE_PATHNAMES = ['/editor', '/login']
