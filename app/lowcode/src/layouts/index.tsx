@@ -12,6 +12,7 @@ export default function Layout() {
   const colorScheme = useRecoilValue(modeState);
   const location = useLocation();
 
+  /** 是否显示Side */
   const hasSide = useMemo(
     () =>
       location.pathname !== "/" && WHITE_ROUTE_PATHNAMES.includes(location.pathname),

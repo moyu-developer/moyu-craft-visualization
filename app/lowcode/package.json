@@ -1,16 +1,16 @@
 {
   "private": true,
-  "author":"wangly19 <1418202350@qq.com>",
+  "author": "wangly19 <1418202350@qq.com>",
   "scripts": {
-    "dev": "umi dev",
+    "dev": "umi dev -PORT 10010",
     "build": "umi build",
     "postinstall": "umi setup",
     "setup": "umi setup",
     "start": "npm run dev"
   },
   "dependencies": {
+    "@moyu-code/editor": "workspace:^0.0.1",
+    "recoil": "^0.7.5",
     "umi": "^4.0.17"
-  },
-  "devDependencies": {
   }
 }
